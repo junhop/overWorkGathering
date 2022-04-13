@@ -1,1 +1,1 @@
-# overWorkGathering
+# 야근 식대 취합 프로젝트
