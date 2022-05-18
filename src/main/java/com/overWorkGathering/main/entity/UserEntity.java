@@ -1,16 +1,22 @@
 package com.overWorkGathering.main.entity;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
+
+import com.overWorkGathering.main.DTO.UserDTO;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity {
@@ -40,24 +46,4 @@ public class UserEntity {
 	@Column(name = "PHONE")
 	private String phone;
 	
-	@Builder
-	public UserEntity(
-			String id, 
-			String pw, 
-			String name, 
-			String email,
-			String part,
-			String partleader,
-			String auth,
-			String phone) {
-		super();
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
-		this.email = email;
-		this.part = part;
-		this.partleader = partleader;
-		this.auth = auth;
-		this.phone = phone;
-	}
 }
