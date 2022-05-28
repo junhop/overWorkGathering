@@ -15,7 +15,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id='calendar-container'>
+	<div id='calendar-container' style="margin:0 auto; width:70%;">
 		<div id ='calendar'></div>
 	</div>
 	
@@ -23,7 +23,15 @@
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth'
+      initialView: 'dayGridMonth',
+	  views: {
+	  	dayGridMonth: {
+           type: 'dayGrid',
+           duration: { months: 1 },
+           monthMode: true,
+           fixedWeekCount: false
+      	}
+	  }
     });
     calendar.render();
   });
