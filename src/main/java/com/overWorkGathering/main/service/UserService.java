@@ -27,6 +27,5 @@ public class UserService {
 				.collect(Collectors.toList());		
 		
 		
-		System.out.println(userDTOList.toString());
 	}
 }

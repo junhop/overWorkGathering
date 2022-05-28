@@ -18,6 +18,14 @@ public class UserController {
 	
 	@GetMapping(value = "/test")
 	public void TEST(){
+		
 		testService.test();
+	}
+	
+	@RequestMapping(value="/calendar", method = RequestMethod.GET)
+	public String calendar() {
+		System.out.println("CalendarCalendarCalendarCalendarCalendar");
+		
+		return "Calendar";
 	}
 }
