@@ -13,4 +13,9 @@ public class WebController {
 		
 		return "Calendar";
 	}
+	
+	@RequestMapping(value="/login")
+	public String login() {
+		return "Login";
+	}
 }
