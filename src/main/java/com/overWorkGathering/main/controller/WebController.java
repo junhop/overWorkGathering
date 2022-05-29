@@ -18,4 +18,19 @@ public class WebController {
 	public String login() {
 		return "Login";
 	}
+	
+	@RequestMapping(value="/SignUp")
+	public String SignUp() {
+		return "SignUp";
+	}
+	
+	@RequestMapping(value="/FindPw")
+	public String FindPw() {
+		return "FindPw";
+	}
+	
+	@RequestMapping(value="/CalendarPopup")
+	public String CalendarPopup() {
+		return "CalendarPopup";
+	}
 }

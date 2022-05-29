@@ -624,7 +624,6 @@ progress {
   padding-left: var(--bs-gutter-x, 1.625rem);
   margin-right: auto;
   margin-left: auto;
-  background-color:red;
 }
 
 @media (min-width: 576px) {
