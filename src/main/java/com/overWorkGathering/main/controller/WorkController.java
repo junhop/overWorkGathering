@@ -23,4 +23,9 @@ public class WorkController {
 	public List<WorkDTO> retrieveWork(@RequestParam String userId) {
 		return workService.retrieveWork(userId);
 	}
+	
+	@RequestMapping(value="/retrieveWorkOne", method = RequestMethod.GET)
+	public WorkDTO retrieveWorkOne(@RequestParam String userID, @RequestParam String workDt) {
+		return workService.retrieveWorkOne(userID, workDt);
+	}
 }
