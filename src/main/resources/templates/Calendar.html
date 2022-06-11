@@ -28,20 +28,6 @@
 <script>
 var id = "hirofac";
 
-$.ajax({
-    url:"/work/retrievework",
-    type:"get",
-    data: {userId : id},
-    dataType : "json",
-    success: function(result) {
-    	debugger;
-        alert("ㅎㅇ");
-    },
-    error: function() {
-        alert("에러 발생");
-    }
-})
-
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -60,8 +46,30 @@ $.ajax({
 	  }
     });
     calendar.render();
+    
+    $.ajax({
+        url:"/work/retrievework",
+        type:"get",
+        data: {userId : id},
+        dataType : "json",
+        success: function(result) {
+        	debugger;
+            for(i = 0; i < result.length; i++){
+                calendar.addEvent({
+                	title : "  근무 시간  " + result[i].startTime + " ~ " + result[i].endTime + " ",
+                	start : result[i].workDt
+                });
+            };
+            
+
+        },
+        error: function() {
+            alert("에러 발생");
+        }
+    })
   });
   
+
 
   const close = () => {
 	  debugger;
