@@ -1,15 +1,21 @@
 package com.overWorkGathering.main.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.overWorkGathering.main.service.WorkService;
 
 @Controller
 public class WebController {
 	
+	@Autowired
+	WorkService workService;
+	
 	@RequestMapping(value="/calendar")
 	public String calendar() {
-		System.out.println("CalendarCalendarCalendarCalendarCalendar");
 		
 		return "Calendar";
 	}
@@ -30,7 +36,10 @@ public class WebController {
 	}
 	
 	@RequestMapping(value="/CalendarPopup")
-	public String CalendarPopup() {
-		return "CalendarPopup";
+	public ModelAndView CalendarPopup(String userID, String workDt) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("CalendarPopup");
+		
+		return mav;
 	}
 }

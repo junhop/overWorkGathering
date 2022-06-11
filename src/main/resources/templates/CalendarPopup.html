@@ -28,16 +28,16 @@ document.addEventListener("DOMContentLoaded", function(){
 $.ajax({
 	url:"/work/retrieveWorkOne",
 	type:"get",
-	data:{userID : "jhyuk97", workDt : params[0]},
+	data:{userID : "jhyuk97", workDt : params},
 	dataType:"json",
 	contentType:"application/json",
 	success: function(result){
 		debugger;
 		if(result.dinnerYn == "Y"){
-			
+			$("input:checkbox[id='dinnerYn']").prop("checked", true);
 		}
 		if(result.taxiYn == "Y"){
-			
+			$("input:checkbox[id='taxiYn']").prop("checked", true);
 		}
 	}
 });
@@ -55,8 +55,8 @@ debugger;
 			<div class="app-brand justify-content-center">
 				<span id="workDt" class="app-brand-text demo text-body fw-bolder" style="padding-bottom:10px;">날짜적기</span>
 			</div>
-			<input class="form-check-input" type="checkbox" value="">식대 요청</input>
-			<input class="form-check-input" type="checkbox" value="">택시비 요청</input>
+			<input class="form-check-input" type="checkbox" id="dinnerYn">식대 요청</input>
+			<input class="form-check-input" type="checkbox" id="taxiYn">택시비 요청</input>
 			
 			<div class="mb-3">
 			<label class="form-label">택시 영수증</label>
