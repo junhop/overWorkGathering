@@ -5,6 +5,7 @@ import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@IdClass(DoublePK.class)
 @Table(name = "WORK")
 public class WorkEntity {
 	
@@ -25,6 +27,7 @@ public class WorkEntity {
 	@Column(name = "USER_ID")
 	private String userId;
 	
+	@Id
 	@Column(name = "WORK_DT")
 	private String workDt;
 	

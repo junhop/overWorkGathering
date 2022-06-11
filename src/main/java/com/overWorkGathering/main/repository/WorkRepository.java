@@ -9,5 +9,7 @@ import com.overWorkGathering.main.entity.WorkEntity;
 public interface WorkRepository extends JpaRepository<WorkEntity, String> {
 
 	List<WorkEntity> findAllByUserId(String id);
+
+	List<WorkEntity> findAllByUserIdAndWorkDtLike(String userId, String workDt);
 	
 }
