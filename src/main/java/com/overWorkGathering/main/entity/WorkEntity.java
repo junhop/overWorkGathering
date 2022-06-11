@@ -18,32 +18,32 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "WORK")
 public class WorkEntity {
 	
 	@Id
-	@Column(name = "ID")
+	@Column(name = "USER_ID")
 	private String userId;
 	
-	@Column(name = "야근일")
+	@Column(name = "WORK_DT")
 	private String workDt;
 	
-	@Column(name = "근무시작시간")
+	@Column(name = "START_TIME")
 	private String startTime;
 	
-	@Column(name = "근무종료시간")
+	@Column(name = "END_TIME")
 	private String endTime;
 	
-	@Column(name = "택시비 영수증 이미지 파일 경로")
+	@Column(name = "IMG")
 	private String img;
 	
-	@Column(name = "택시비")
+	@Column(name = "TAXI_PAY")
 	private String taxiPay;
 	
-	@Column(name = "저녁식대 청구 여부")
+	@Column(name = "DINNER_YN")
 	private String dinnerYn;
 	
-	@Column(name = "택시비 청구 여부")
+	@Column(name = "TAXI_YN")
 	private String taxiYn;
 	
 }

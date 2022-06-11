@@ -15,9 +15,9 @@ public class WorkService {
 	@Autowired
 	WorkRepository workRepository;
 	
-	public List<WorkDTO> retrieveWork(String id) {
+	public List<WorkDTO> retrieveWork(String userId) {
 		
-		List<WorkEntity> WorkEntityList = workRepository.findAllByUserId(id);
+		List<WorkEntity> WorkEntityList = workRepository.findAllByUserId(userId);
 		
 		return null;
 	}
