@@ -11,5 +11,7 @@ public interface WorkRepository extends JpaRepository<WorkEntity, String> {
 	List<WorkEntity> findAllByUserId(String id);
 
 	WorkEntity findAllByUserIdAndWorkDt(String userId, String workDt);
+
+	List<WorkEntity> findAllByUserIdAndWorkDtLike(String userId, String workDt);
 	
 }
