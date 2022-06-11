@@ -11,14 +11,20 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>  
 <!-- fullcalendar 언어 CDN -->  
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js'></script>
-
+<!-- 모달 CDN --> 
+<link rel="stylesheet" href="../css/modal.css" />
 <title>Insert title here</title>
 </head>
 <body>
 	<div id='calendar-container' style="margin:0 auto; width:70%;">
 		<div id ='calendar'></div>
 	</div>
-	
+<div class="modal hidden">
+  <div class="bg"></div>
+  <div class="modalBox">
+    <iframe id="/CalendarPopup" src="/CalendarPopup" width="400" height="350"></iframe>
+  </div>
+</div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -31,10 +37,27 @@
            monthMode: true,
            fixedWeekCount: false
       	}
+	  },
+	  dateClick: function() {
+		  open();
 	  }
     });
     calendar.render();
   });
+  
+  const open = () => {
+	  debugger;
+    document.querySelector(".modal").classList.remove("hidden");
+  }
+
+  const close = () => {
+	  debugger;
+    document.querySelector(".modal").classList.add("hidden");
+  }
+
+  document.querySelector(".closeBtn").addEventListener("click", close);
+  document.querySelector(".bg").addEventListener("click", close);
+  
 </script>
 </body>
 </html>

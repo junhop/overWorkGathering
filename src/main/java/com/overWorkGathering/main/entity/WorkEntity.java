@@ -19,31 +19,31 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "user")
-public class UserEntity {
+public class WorkEntity {
 	
 	@Id
 	@Column(name = "ID")
 	private String userId;
 	
-	@Column(name = "PW")
-	private String pw;
+	@Column(name = "야근일")
+	private String workDt;
 	
-	@Column(name = "NAME")
-	private String name;
+	@Column(name = "근무시작시간")
+	private String startTime;
 	
-	@Column(name = "EMAIL")
-	private String email;
+	@Column(name = "근무종료시간")
+	private String endTime;
 	
-	@Column(name = "PART")
-	private String part;
+	@Column(name = "택시비 영수증 이미지 파일 경로")
+	private String img;
 	
-	@Column(name = "PARTLEADER")
-	private String partleader;
+	@Column(name = "택시비")
+	private String taxiPay;
 	
-	@Column(name = "AUTH")
-	private String auth;
+	@Column(name = "저녁식대 청구 여부")
+	private String dinnerYn;
 	
-	@Column(name = "PHONE")
-	private String phone;
+	@Column(name = "택시비 청구 여부")
+	private String taxiYn;
 	
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 	
-	private String id;
+	private String userId;
 	private String pw;
 	private String name;
 	private String email;
@@ -19,7 +19,7 @@ public class UserDTO {
 	
 	@Builder
 	public UserDTO(
-			String id, 
+			String userId, 
 			String pw, 
 			String name, 
 			String email,
@@ -27,7 +27,7 @@ public class UserDTO {
 			String partleader,
 			String auth,
 			String phone) {
-		this.id = id;
+		this.userId = userId;
 		this.pw = pw;
 		this.name = name;
 		this.email = email;
