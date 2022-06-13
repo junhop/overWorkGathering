@@ -2,9 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 
-<!-- Core CSS -->
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="/js/rsa.js"></script>
+    <script type="text/javascript" src="/js/jsbn.js"></script>
+    <script type="text/javascript" src="/js/prng4.js"></script>
+    <script type="text/javascript" src="/js/rng.js"></script>
+  <!-- Core CSS -->
     <link rel="stylesheet" href="../css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="../css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../css/demo.css" />
@@ -28,47 +34,49 @@
               </div>
               <!-- /Logo -->
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
-                <div class="mb-3">
-                  <label for="email" class="form-label">아이디</label>
+
+              <div class="mb-3">
+                <label for="userId" class="form-label">아이디</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userId"
+                  name="email-username"
+                  placeholder="ID"
+                  autofocus
+                />
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label" for="password">비밀번호</label>
+                  <a href="FindPw">
+                    <small>비밀번호 찾기</small>
+                  </a>
+                </div>
+                <div class="input-group input-group-merge">
                   <input
-                    type="text"
+                    type="password"
+                    id="password"
                     class="form-control"
-                    id="email"
-                    name="email-username"
-                    placeholder="ID"
-                    autofocus
+                    name="password"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password"
                   />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">비밀번호</label>
-                    <a href="FindPw">
-                      <small>비밀번호 찾기</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember-me" />
+                  <label class="form-check-label" for="remember-me"> Remember Me </label>
                 </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" href="Calendar">로그인</button>
-                </div>
-              </form>
+              </div>
+              <div class="mb-3">
+                <input type="hidden" id="RSAModulus" value="${RSAModulus}" />
+                <input type="hidden" id="RSAExponent" value="${RSAExponent}" />
+                <button class="btn btn-primary d-grid w-100" href="btn_login" onclick="btn_login_onclick()">로그인</button>
+              </div>
+
 
               <p class="text-center">
                 <a href="SignUp">
@@ -81,6 +89,55 @@
         </div>
       </div>
     </div>
+<script>
+  btn_login_onclick = function(){
+    var id = document.getElementById("userId").value;
+    var pw = document.getElementById("password").value;
+    console.log("로그인 버튼 클릭");
+    console.log("아이디 >>>>> " + id);
+    console.log("비밀번호 >>>>> " + pw);
 
+    if (!id || !pw) {
+        alert("ID/비밀번호를 입력해주세요.");
+        return false;
+    }
+    debugger;
+    try {
+        var RSAModulus = $('#RSAModulus').val();
+        var RSAExponent = $('#RSAExponent').val();
+        console.log("RSAModulus >>>>> " + RSAModulus);
+        console.log("RSAExponent >>>>> " + RSAExponent);
+
+        logInEncryptForm(userId, pw, RSAModulus, RSAExponent);
+    } catch(err) {
+        alert(err);
+    }
+  }
+
+  logInEncryptForm = function(userId, password, RSAModulus, RSAExponent){
+    var rsa = new RSAKey();
+    rsa.setPublic(RSAModulus, RSAExponent);
+
+    // 사용자ID와 비밀번호를 RSA로 암호화한다.
+    var securedUserId = rsa.encrypt(userId);
+    var securedPassword = rsa.encrypt(password);
+
+    $.ajax({
+        url:"/user/auth",
+        type:"POST",
+        data: {
+          userId : securedUserId,
+          pw : securedPassword
+        },
+        dataType : "json",
+        success: function(result) {
+        },
+        error: function() {
+        }
+    })
+  }
+
+
+</script>
 </body>
 </html>
