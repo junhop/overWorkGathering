@@ -76,7 +76,13 @@
                 <input type="hidden" id="RSAExponent" value="${RSAExponent}" />
                 <button class="btn btn-primary d-grid w-100" href="btn_login" onclick="btn_login_onclick()">로그인</button>
               </div>
-
+                <input type="hidden" id="rsaPublicKeyModulus" value="<%=publicKeyModulus%>" />
+                <input type="hidden" id="rsaPublicKeyExponent" value="<%=publicKeyExponent%>" />
+                <a href="<%=request.getContextPath()%>/loginFailure.jsp" onclick="validateEncryptedForm(); return false;">로그인</a>
+                <form id="securedLoginForm" name="securedLoginForm" action="<%=request.getContextPath()%>/login" method="post" style="display: none;">
+                    <input type="hidden" name="securedUsername" id="securedUsername" value="" />
+                    <input type="hidden" name="securedPassword" id="securedPassword" value="" />
+                </form>
 
               <p class="text-center">
                 <a href="SignUp">
@@ -91,43 +97,49 @@
     </div>
 <script>
   btn_login_onclick = function(){
-    var id = document.getElementById("userId").value;
-    var pw = document.getElementById("password").value;
-    console.log("로그인 버튼 클릭");
-    console.log("아이디 >>>>> " + id);
-    console.log("비밀번호 >>>>> " + pw);
+    var id = $("#userId");
+    var pw = $("#password");
 
-    if (!id || !pw) {
-        alert("ID/비밀번호를 입력해주세요.");
+    if(id.val() == ""){
+        alert("아이디를 입력해주세요.");
+        id.focus();
         return false;
     }
-    debugger;
-    try {
-        var RSAModulus = $('#RSAModulus').val();
-        var RSAExponent = $('#RSAExponent').val();
-        console.log("RSAModulus >>>>> " + RSAModulus);
-        console.log("RSAExponent >>>>> " + RSAExponent);
 
-        logInEncryptForm(userId, pw, RSAModulus, RSAExponent);
-    } catch(err) {
-        alert(err);
+    if(pw.val() == ""){
+        alert("비밀번호를 입력해주세요.");
+        pw.focus();
+        return false;
     }
-  }
+    console.log("로그인 버튼 클릭");
+    console.log("아이디 >>>>> " + id.val());
+    console.log("비밀번호 >>>>> " + pw.val());
 
-  logInEncryptForm = function(userId, password, RSAModulus, RSAExponent){
     var rsa = new RSAKey();
-    rsa.setPublic(RSAModulus, RSAExponent);
+    rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+    console.log("RSAModulus >>>>> " + $('#RSAModulus').val());
+    console.log("RSAExponent >>>>> " + $('#RSAExponent').val());
 
-    // 사용자ID와 비밀번호를 RSA로 암호화한다.
-    var securedUserId = rsa.encrypt(userId);
-    var securedPassword = rsa.encrypt(password);
+    var encryptId = "";
+    var encryptPw = "";
+
+    if(id.val() == "test"){
+        encryptId = id.val();
+        encryptPw = pw.val();
+    }else{
+        encryptId = rsa.encrypt(id.val());
+        encryptPw = rsa.encrypt(pw.val());
+    }
+
+    console.log("암호화 아이디 >>>>> " + encryptId);
+    console.log("암호화 비밀번호 >>>>> " + encryptPw);
 
     $.ajax({
         url:"/user/auth",
         type:"POST",
         data: {
-          userId : securedUserId,
-          pw : securedPassword
+          userId : encryptId,
+          pw : encryptPw
         },
         dataType : "json",
         success: function(result) {
