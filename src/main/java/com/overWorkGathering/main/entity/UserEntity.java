@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
 	
 	@Id
-	@Column(name = "ID")
+	@Column(name = "USER_ID")
 	private String userId;
 	
 	@Column(name = "PW")

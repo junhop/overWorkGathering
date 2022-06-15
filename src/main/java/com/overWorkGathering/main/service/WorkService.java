@@ -33,7 +33,7 @@ public class WorkService {
 		String workDt = "%" + yyyyMM + "%";
 		
 		List<WorkEntity> workEntityList =
-		workRepository.findAllByUserIdAndWorkDtLike(userId, workDt);
+				workRepository.findAllByUserIdAndWorkDtLike(userId, workDt);
 		  
 		return workEntityList
 				.stream() 
