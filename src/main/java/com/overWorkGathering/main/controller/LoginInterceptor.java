@@ -17,10 +17,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Object sessionId = session.getAttribute("ID");
         System.out.println("sessionId >>>>> " + sessionId);
-        if(sessionId == null){
-            response.sendRedirect("/login");
-            return false;
-        }
+		/*
+		 * if(sessionId == null){ response.sendRedirect("/login"); return false; }
+		 */
 
         //request.getSession().get
         // 인증여부 판단후 페이지이동 로직
