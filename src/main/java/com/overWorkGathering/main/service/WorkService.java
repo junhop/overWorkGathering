@@ -3,6 +3,7 @@ package com.overWorkGathering.main.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -42,12 +43,56 @@ public class WorkService {
 				.collect(Collectors.toList());
 	}
 	
+	/*
+	 * 해당날짜 식대신청여부확인을 위한 조회
+	 */
 	public WorkDTO retrieveWorkOne(String userId, String workDt) {
 		WorkEntity workEntity = workRepository.findAllByUserIdAndWorkDt("jhyuk97", workDt);
 		if(workEntity != null) {
 			return modelMapper.map(workEntity, WorkDTO.class);
 		}
 		return null;
+	}
+	
+	/*
+	 * 야근식대 저장 및 업데이트
+	 */
+	public void saveWork(Map<String, Object> param) {
+		String startTime = "09:00";
+		String endTime = "";
+		if("true".equals(param.get("dinnerYn").toString())) {
+			param.replace("dinnerYn", "Y");
+			endTime = "21:00";
+		}else {
+			param.replace("dinnerYn", "N");
+		}
+		
+		if("true".equals(param.get("taxiYn").toString())) {
+			param.replace("taxiYn", "Y");
+			endTime = "23:00";
+		}else {
+			param.replace("taxiYn", "N");
+		}
+		
+		WorkDTO workDTO = WorkDTO.builder().userId(param.get("userID").toString())
+						 .workDt(param.get("workDt").toString())
+						 .startTime(startTime)
+						 .endTime(endTime)
+						 .img(param.get("Img").toString())
+						 .taxiPay(param.get("taxiPay").toString())
+						 .dinnerYn(param.get("dinnerYn").toString())
+						 .taxiYn(param.get("taxiYn").toString()).build();
+		
+		WorkEntity workEntity = modelMapper.map(workDTO, WorkEntity.class);
+		
+		workRepository.save(workEntity);
+	}
+	
+	/*
+	 * 야근식대 삭제
+	 */
+	public void deleteWork(Map<String, Object> param) {
+		workRepository.deleteByUserIdAndWorkDt(param.get("userID").toString(), param.get("workDt").toString());
 	}
 
 }

@@ -1,8 +1,11 @@
 package com.overWorkGathering.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,5 +30,15 @@ public class WorkController {
 	@RequestMapping(value="/retrieveWorkOne", method = RequestMethod.GET)
 	public WorkDTO retrieveWorkOne(@RequestParam String userID, @RequestParam String workDt) {
 		return workService.retrieveWorkOne(userID, workDt);
+	}
+	
+	@RequestMapping(value="/SaveWork", method = RequestMethod.POST)
+	public void saveWork(@RequestBody Map<String, Object> param) {
+		workService.saveWork(param);
+	}
+	
+	@RequestMapping(value="/DeleteWork", method = RequestMethod.POST)
+	public void DeleteWork(@RequestBody Map<String, Object> param) {
+		workService.deleteWork(param);
 	}
 }
