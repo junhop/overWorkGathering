@@ -17,5 +17,7 @@ public interface WorkRepository extends JpaRepository<WorkEntity, String> {
 	
 	@Transactional
 	void deleteByUserIdAndWorkDt(String userId, String workDt);
+
+	List<WorkEntity> findAllByUserIdInAndWorkDtLike(List<String> userIdList, String workDt);
 	
 }
