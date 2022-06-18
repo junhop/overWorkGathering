@@ -29,78 +29,122 @@
                 </a>
               </div>
               <!-- /Logo -->
-
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
-                <div class="mb-3">
-                  <label for="username" class="form-label">아이디</label>
+              <div class="mb-3">
+                <label for="userId" class="form-label">아이디</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userId"
+                  name="userId"
+                  placeholder="ID"
+                  autofocus
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">이메일</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="email" />
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <label class="form-label" for="password">비밀번호</label>
+                <div class="input-group input-group-merge">
                   <input
-                    type="text"
+                    type="password"
+                    id="password"
                     class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="ID"
-                    autofocus
+                    name="password"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    maxlength="32"
+                    aria-describedby="password"
                   />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">이메일</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="email" />
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">비밀번호</label>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                
-                <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">비밀번호 확인</label>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">전화번호</label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" />
-                </div>
-                <div class="mb-3">
-                	<label for="phone" class="form-label">파트</label>
-                	<select class="form-select" name="part">
-                		<option value="">a</option>
-                		<option value="">b</option>
-                		<option value="">c</option>
-                	</select>
-                </div>
-                <div class="mb-3">
-                	<label for="phone" class="form-label">파트 리더</label>
-                	<select class="form-select" name="part">
-                		<option value="">아무개</option>
-                	</select>
-                </div>
+              </div>
 
-                <button class="btn btn-primary d-grid w-100">회원가입</button>
-              </form>
+              <div class="mb-3 form-password-toggle">
+                <label class="form-label" for="password">비밀번호 확인</label>
+                <div class="input-group input-group-merge">
+                  <input
+                    type="passwordCheck"
+                    id="passwordCheck"
+                    class="form-control"
+                    name="password"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    maxlength="32"
+                    aria-describedby="password"
+                  />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">전화번호</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" />
+              </div>
+              <div class="mb-3">
+                  <label for="phone" class="form-label">파트</label>
+                  <select class="form-select" id="part" name="part">
+                      <option value="">a</option>
+                      <option value="">b</option>
+                      <option value="">c</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="phone" class="form-label">파트 리더</label>
+                  <select class="form-select" id="partLeader" name="partLeader">
+                      <option value="">아무개</option>
+                  </select>
+              </div>
+
+              <button class="btn btn-primary d-grid w-100" onclick="btn_confirm_onclick">회원가입</button>
             </div>
           </div>
           <!-- Register Card -->
         </div>
       </div>
     </div>
+
+    <script>
+       btn_confirm_onclick = function(){
+        if(requiredCheck() == "check"){
+          location.href = "login";
+        }
+      }
+
+      function requiredCheck(){
+        var id = $("#userId");
+        var email = $("#email");
+        var pw = $("#password");
+        var phone = $("#phone");
+        var part = $("#part");
+        var partLeader = $("#partLeader");
+
+        if(id.val == ""){
+          alert("아이디가 입력되지 않았습니다. \n 아이디를 입력해주세요.");
+          id.focus();
+          return false;
+        }else if(email.val == ""){
+          alert("이메일이 입력되지 않았습니다. \n 이메일을 입력해주세요.");
+          email.focus();
+          return false;
+        }else if(pw.val == ""){
+          alert("비밀번호가 입력되지 않았습니다. \n 비밀번호를 입력해주세요.");
+          pw.focus();
+          return false;
+        }else if(phone.val == ""){
+          alert("전화번호가 입력되지 않았습니다. \n 전화번호를 입력해주세요.");
+          phone.focus();
+          return false;
+        }else if(part.val == ""){
+          alert("파트를 선택하지  않았습니다. \n 파트를 선택해주세요.");
+          part.focus();
+          return false;
+        } else if(partLeader.val == ""){
+          alert("파트리더를 선택하지  않았습니다. \n 파트리더를 선택해주세요.");
+          partLeader.focus();
+          return "";
+        }else{
+          return "check";
+        }
+      }
+    </script>
 </body>
 </html>

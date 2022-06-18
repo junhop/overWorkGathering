@@ -95,8 +95,11 @@
         </div>
       </div>
     </div>
+
+ <%(String)session.getAttribute("Auth")%>
 <script>
   btn_login_onclick = function(){
+    debugger;
     var id = $("#userId");
     var pw = $("#password");
 
@@ -111,9 +114,6 @@
         pw.focus();
         return false;
     }
-    console.log("로그인 버튼 클릭");
-    console.log("아이디 >>>>> " + id.val());
-    console.log("비밀번호 >>>>> " + pw.val());
 
     var rsa = new RSAKey();
     rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
@@ -123,16 +123,13 @@
     var encryptId = "";
     var encryptPw = "";
 
-    if(id.val() == "test"){
-        encryptId = id.val();
-        encryptPw = pw.val();
-    }else{
-        encryptId = rsa.encrypt(id.val());
-        encryptPw = rsa.encrypt(pw.val());
-    }
 
-    console.log("암호화 아이디 >>>>> " + encryptId);
-    console.log("암호화 비밀번호 >>>>> " + encryptPw);
+    encryptId = id.val();
+    encryptPw = pw.val();
+
+//        encryptId = rsa.encrypt(id.val());
+//        encryptPw = rsa.encrypt(pw.val());
+
 
     $.ajax({
         url:"/user/auth",
@@ -141,13 +138,28 @@
           userId : encryptId,
           pw : encryptPw
         },
-        dataType : "json",
         success: function(result) {
+            debugger;
+
+            var auth = result.userId;
+
+            if(auth != ""){
+                alert(result.name + "님 환영합니다.");
+                location.href = "calendar";
+            } else{
+                id.val = "";
+                pw.val = "";
+                alert("로그인에 실패 하였습니다. \n 다시 로그인하여 주십시오.");
+
+            }
         },
-        error: function() {
+        error: function(request, error) {
+            debugger;
+            alert("code:" + request.status + "\n message:" + request.responseText + "\n error:" + error);
         }
     })
   }
+
 
 
 </script>

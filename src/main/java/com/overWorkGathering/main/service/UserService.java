@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+import com.overWorkGathering.main.mapper.UserMapper;
 import com.overWorkGathering.main.utils.BizException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.Cipher;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class UserService {
@@ -25,6 +27,7 @@ public class UserService {
 	UserRepository userRepository;
 	
 	ModelMapper modelMapper = new ModelMapper();
+
 
 	private static String RSA_WEB_KEY = "_RSA_WEB_Key_"; // 개인키 session key
 	private static String RSA_INSTANCE = "RSA"; // rsa transformation
@@ -38,14 +41,17 @@ public class UserService {
 		
 	}
 
-	public boolean auth(UserDTO userInfo) throws Exception{
+	public UserDTO auth(HttpSession session, UserDTO userInfo) {
 		UserEntity user = userRepository.findByUserIdAndPw(userInfo.getUserId(), userInfo.getPw());
 
 		if(ObjectUtils.isEmpty(user)){
-			return false;
-		};
+			userInfo.setUserId("");
+			userInfo.setPw("");
+		}else {
+			userInfo.setName(user.getName());
+		}
 
-		return true;
+		return userInfo;
 	}
 
 	private String decryptRsa(PrivateKey privateKey, String securedValue) throws Exception {
