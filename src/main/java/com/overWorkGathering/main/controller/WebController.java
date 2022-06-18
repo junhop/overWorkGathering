@@ -79,4 +79,9 @@ public class WebController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value="/Master")
+	public String master() {
+		return "Master";
+	}
 }
