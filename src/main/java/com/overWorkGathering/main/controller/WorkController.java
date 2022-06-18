@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.overWorkGathering.main.DTO.WorkCollectionReqDTO;
 import com.overWorkGathering.main.DTO.WorkDTO;
 import com.overWorkGathering.main.service.UserService;
 import com.overWorkGathering.main.service.WorkService;
@@ -40,5 +41,10 @@ public class WorkController {
 	@RequestMapping(value="/DeleteWork", method = RequestMethod.POST)
 	public void DeleteWork(@RequestBody Map<String, Object> param) {
 		workService.deleteWork(param);
+	}
+	
+	@RequestMapping(value="/retrieveWorkCollection", method = RequestMethod.GET)
+	public List<WorkCollectionReqDTO> retrieveWorkCollection(@RequestParam String part, @RequestParam String dt) {
+		return workService.retrieveWorkCollection(part, dt);
 	}
 }
